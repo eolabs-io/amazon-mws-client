@@ -50,7 +50,7 @@ class AmazonMwsHttpTest extends TestCase
 
         $parameters = ['SignatureMethod' => 'HmacSHA256'];
         $endpoint = 'someEndpoint/version';
-        $signature = 'oCptllwr/gU5ByzQsZlw0xBTw5Ru7baffzBiNQNvof8=';
+        $signature = 'G02CZZWUrjUtIJNQQUL+zQVa39p0Z6hlQV0qwBuIsew=';
 
     	$response = AmazonMwsHttp::withStore($this->store)->fetch($endpoint, $parameters);
 

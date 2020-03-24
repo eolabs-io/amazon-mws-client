@@ -20,11 +20,6 @@ class UrlSigner
     private $method = 'POST';
 
 
-    public function __construct()
-    {
-
-    }
-
 	public function with(array $options = [])
 	{
 		$this->method = data_get($options, 'method', $this->method);
@@ -124,10 +119,6 @@ class UrlSigner
 
     private function getPath(): string
     {
-        $path = parse_url($this->url, PHP_URL_PATH);
-
-        return (Str::startsWith($path, "/")) 
-                    ? Str::after($path, "/")
-                    : $path;
+        return parse_url($this->url, PHP_URL_PATH);
     }
 }

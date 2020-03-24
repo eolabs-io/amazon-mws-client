@@ -42,7 +42,7 @@ class UrlSignerTest extends TestCase
    /** @test */
     public function it_can_sign_parameters()
     {
-    	$expectedSignature = 'OhBitsi9JCdJwmAVkDckAS/DCUu9uVvAwctjWk6jE0Q=';
+    	$expectedSignature = 'um4NTkon8DGlNl70OHvNMnvzPbck+p+wMbFwx2/uXgU=';
     	$parameters = UrlSigner::with($this->options)->signParameters($this->secret, $this->parameters);
 
         $this->assertArrayHasKey('Signature', $parameters);

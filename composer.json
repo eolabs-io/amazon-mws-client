@@ -1,0 +1,55 @@
+{
+    "name": "eolabs-io/amazon-mws-client",
+    "description": "A client that connects to Amazon's MWS API",
+    "keywords": [
+        "eolabs-io",
+        "amazon-mws-client"
+    ],
+    "homepage": "https://github.com/eolabs-io/amazon-mws-client",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Tim Hall",
+            "email": "thall@eolabs.io",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "guzzlehttp/guzzle": "^6.5",
+        "illuminate/support": "^7.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^5.0",
+        "phpunit/phpunit": "^8.4|^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "EolabsIo\\AmazonMwsClient\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EolabsIo\\AmazonMwsClient\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "EolabsIo\\AmazonMwsClient\\AmazonMwsClientServiceProvider"
+            ],
+            "aliases": {
+                "AmazonMwsClient": "EolabsIo\\AmazonMwsClient\\AmazonMwsClientFacade"
+            }
+        }
+    }
+}

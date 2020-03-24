@@ -56,6 +56,20 @@ class StoreTest extends TestCase
         $this->assertDatabaseMissing('stores', $store->toArray());
     }
 
+    /** @test */
+    public function it_can_create_parameter_array()
+    {
+        $store = factory(Store::class)->create();
+
+        $expectedParameters = [
+            'AWSAccessKeyId' => $store->aws_access_key_id,
+            'MWSAuthToken' => $store->mws_auth_token,
+            'SellerId' => $store->seller_id
+        ];
+
+        $this->assertArraysEqual($expectedParameters, $store->toParameters());   
+    }
+
     // Helpers //
     private function assertArraysEqual($array1, $array2){
 

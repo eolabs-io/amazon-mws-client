@@ -18,7 +18,7 @@ class AmazonMwsClientServiceProvider extends ServiceProvider
          */
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'amazon-mws-client');
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'amazon-mws-client');
-        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         // $this->loadRoutesFrom(__DIR__.'/routes.php');
 
         if ($this->app->runningInConsole()) {

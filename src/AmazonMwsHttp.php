@@ -66,4 +66,9 @@ class AmazonMwsHttp
     {
     	return $this->store->secret_key;
     }
+
+    public function getRegisteredMarketplaceIds(): array
+    {
+        return $this->store->marketplaces->pluck('marketplace_id')->toArray();
+    }
 }

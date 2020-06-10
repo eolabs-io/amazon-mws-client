@@ -1,5 +1,6 @@
 <?php
 
+use EolabsIo\AmazonMwsClient\Models\Marketplace;
 use EolabsIo\AmazonMwsClient\Models\Store;
 use Faker\Generator as Faker;
 

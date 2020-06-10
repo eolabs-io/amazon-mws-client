@@ -3,10 +3,12 @@
 namespace EolabsIo\AmazonMwsClient\Tests;
 
 use EolabsIo\AmazonMwsClient\Facades\AmazonMwsHttp;
+use EolabsIo\AmazonMwsClient\Models\Marketplace;
 use EolabsIo\AmazonMwsClient\Models\Store;
 use EolabsIo\AmazonMwsClient\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 
@@ -23,8 +25,15 @@ class AmazonMwsHttpTest extends TestCase
     {
         parent::setUp();
 
-		$this->store = factory(Store::class)->create(['amazon_service_url' => 'https://mws.amazonservices.com', 
-													  'secret_key' => 'EXAMPLE+HOf9NtN2r1XqALt7fc9EL290cpEXBg']);
+        $this->seed();
+        $firstFourMarketPalces = Marketplace::all()->take(4);
+
+		$this->store = factory(Store::class)->create(['secret_key' => 'EXAMPLE+HOf9NtN2r1XqALt7fc9EL290cpEXBg',
+                                                      'amazon_service_url' => 'https://mws.amazonservices.com',
+                                                    ]);
+
+        $this->store->marketplaces()->toggle($firstFourMarketPalces);
+
     }
 
     /** @test */
@@ -60,5 +69,31 @@ class AmazonMwsHttpTest extends TestCase
                    $request['Signature'] == $signature;
         });
     }
+
+    /** @test */
+    public function it_can_get_marketplace_ids()
+    {
+        Http::fake();
+
+        $registeredMarketplaceIds = AmazonMwsHttp::withStore($this->store)->getRegisteredMarketplaceIds();
+
+        $this->assertEquals($registeredMarketplaceIds,   
+                            ["A2Q3Y263D00KWC","A2EUQ1WTGCTBG2","A1AM78C64UM0Y8","ATVPDKIKX0DER"]
+                        );
         
+    }
+ 
+     /** @test */
+    public function it_fails_to_get_marketplace_ids()
+    {
+        Http::fake();
+        
+        DB::table('marketplaces')->delete();
+
+        $registeredMarketplaceIds = AmazonMwsHttp::withStore($this->store)->getRegisteredMarketplaceIds();
+
+        $this->assertEquals($registeredMarketplaceIds, []);
+        
+    }
+
 }

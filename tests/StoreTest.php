@@ -2,6 +2,7 @@
 
 namespace EolabsIo\AmazonMwsClient\Tests;
 
+use EolabsIo\AmazonMwsClient\Models\Marketplace;
 use EolabsIo\AmazonMwsClient\Models\Store;
 use EolabsIo\AmazonMwsClient\Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -68,6 +69,18 @@ class StoreTest extends TestCase
         ];
 
         $this->assertArraysEqual($expectedParameters, $store->toParameters());   
+    }
+
+    /** @test */
+    public function it_has_marketplace_relationship()
+    {
+        $this->seed();
+        $firstThreeMarketPalces = Marketplace::all()->take(3);
+        
+        $store = factory(Store::class)->create();
+        $store->marketplaces()->toggle($firstThreeMarketPalces);
+
+        $this->assertArraysEqual($firstThreeMarketPalces->toArray(), $store->marketplaces->toArray()); 
     }
 
     // Helpers //

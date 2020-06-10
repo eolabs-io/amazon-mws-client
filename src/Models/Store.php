@@ -3,6 +3,7 @@
 namespace EolabsIo\AmazonMwsClient\Models;
 
 use EolabsIo\AmazonMwsClient\Models\Contracts\Parameterable;
+use EolabsIo\AmazonMwsClient\Models\Marketplace;
 use Illuminate\Database\Eloquent\Model;
 
 class Store extends Model implements Parameterable
@@ -20,6 +21,12 @@ class Store extends Model implements Parameterable
                     'amazon_service_url',
 				]; 
 
+    protected $hidden = ['pivot'];
+
+    public function marketplaces()
+    {
+        return $this->belongsToMany(Marketplace::class);
+    }
 
     public function toParameters(): array
     {

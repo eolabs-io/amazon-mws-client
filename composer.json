@@ -25,6 +25,9 @@
         "phpunit/phpunit": "^8.4|^9.0"
     },
     "autoload": {
+        "classmap": [
+            "database/seeds"
+        ],
         "psr-4": {
             "EolabsIo\\AmazonMwsClient\\": "src"
         }

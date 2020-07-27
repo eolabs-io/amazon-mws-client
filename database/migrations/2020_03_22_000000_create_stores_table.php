@@ -21,6 +21,7 @@ class CreateStoresTable extends Migration
             $table->string('seller_id');
             $table->string('amazon_service_url');
             $table->timestamps();
+
         });
     }
 

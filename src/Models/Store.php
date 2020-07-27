@@ -4,6 +4,7 @@ namespace EolabsIo\AmazonMwsClient\Models;
 
 use EolabsIo\AmazonMwsClient\Models\Contracts\Parameterable;
 use EolabsIo\AmazonMwsClient\Models\Marketplace;
+use EolabsIo\AmazonMwsClient\Models\Participation;
 use Illuminate\Database\Eloquent\Model;
 
 class Store extends Model implements Parameterable
@@ -21,11 +22,17 @@ class Store extends Model implements Parameterable
                     'amazon_service_url',
 				]; 
 
-    protected $hidden = ['pivot'];
 
     public function marketplaces()
     {
-        return $this->belongsToMany(Marketplace::class);
+        return $this->hasManyThrough(
+            Marketplace::class, 
+            Participation::class, 
+            'seller_id', 
+            'marketplace_id',
+            'seller_id',
+            'marketplace_id'
+        );
     }
 
     public function toParameters(): array

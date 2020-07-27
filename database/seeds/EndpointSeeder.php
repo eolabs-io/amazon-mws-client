@@ -1,9 +1,9 @@
 <?php
 
-use EolabsIo\AmazonMwsClient\Models\Marketplace;
+use EolabsIo\AmazonMwsClient\Models\Endpoint;
 use Illuminate\Database\Seeder;
 
-class MarketplaceSeeder extends Seeder
+class EndpointSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,12 +12,12 @@ class MarketplaceSeeder extends Seeder
      */
     public function run()
     {
-    	foreach($this->marketplaces() as $marketplace) {
-    		Marketplace::create($marketplace);
+    	foreach($this->endpoints() as $endpoint) {
+    		Endpoint::create($endpoint);
     	}
     }
 
-    public function marketplaces(): array
+    public function endpoints(): array
     {
     	return [
 			['name' => 'Brazil', 'country_code' => 'BR', 'endpoint' => 'https://mws.amazonservices.com', 'marketplace_id' => 'A2Q3Y263D00KWC'],
@@ -41,4 +41,3 @@ class MarketplaceSeeder extends Seeder
     	];
     }
 }
-

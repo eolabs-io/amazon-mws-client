@@ -4,10 +4,12 @@ namespace EolabsIo\AmazonMwsClient\Tests;
 
 use EolabsIo\AmazonMwsClient\Facades\AmazonMwsHttp;
 use EolabsIo\AmazonMwsClient\Models\Marketplace;
+use EolabsIo\AmazonMwsClient\Models\Participation;
 use EolabsIo\AmazonMwsClient\Models\Store;
 use EolabsIo\AmazonMwsClient\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
@@ -20,20 +22,22 @@ class AmazonMwsHttpTest extends TestCase
 	/** @var EolabsIo\AmazonMwsClient\Models\Store */
 	private $store;
 
+    /** @var Collection */
+    private $marketplaces;
+
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->seed();
-        $firstFourMarketPalces = Marketplace::all()->take(4);
-
 		$this->store = factory(Store::class)->create(['secret_key' => 'EXAMPLE+HOf9NtN2r1XqALt7fc9EL290cpEXBg',
                                                       'amazon_service_url' => 'https://mws.amazonservices.com',
                                                     ]);
 
-        $this->store->marketplaces()->toggle($firstFourMarketPalces);
+        $participations = factory(Participation::class, 3)
+                            ->create(['seller_id' => $this->store->seller_id]);
 
+        $this->marketplaces = $participations->load('marketplace')->pluck('marketplace');
     }
 
     /** @test */
@@ -77,13 +81,13 @@ class AmazonMwsHttpTest extends TestCase
 
         $registeredMarketplaceIds = AmazonMwsHttp::withStore($this->store)->getRegisteredMarketplaceIds();
 
-        $this->assertEquals($registeredMarketplaceIds,   
-                            ["A2Q3Y263D00KWC","A2EUQ1WTGCTBG2","A1AM78C64UM0Y8","ATVPDKIKX0DER"]
+        $this->assertArraysEqual($registeredMarketplaceIds,   
+                            $this->marketplaces->pluck('marketplace_id')->values()->toArray()
                         );
         
     }
  
-     /** @test */
+    /** @test */
     public function it_fails_to_get_marketplace_ids()
     {
         Http::fake();
@@ -94,6 +98,16 @@ class AmazonMwsHttpTest extends TestCase
 
         $this->assertEquals($registeredMarketplaceIds, []);
         
+    }
+
+    // Helpers //
+    private function assertArraysEqual($array1, $array2){
+
+        $sortedArray1 = Arr::sortRecursive($array1);
+        $sortedArray2 = Arr::sortRecursive($array2);
+
+        // return
+        $this->assertEquals($sortedArray1, $sortedArray2);
     }
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace EolabsIo\AmazonMwsClient\Tests;
+namespace EolabsIo\AmazonMwsClient\Tests\Unit;
 
 use EolabsIo\AmazonMwsClient\Models\Marketplace;
 use EolabsIo\AmazonMwsClient\Tests\BaseModelTest;

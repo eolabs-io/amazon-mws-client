@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
 
 class CreateMarketplacesTable extends Migration
 {
@@ -15,11 +16,16 @@ class CreateMarketplacesTable extends Migration
     {
         Schema::create('marketplaces', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('marketplace_id');
             $table->string('name');
-            $table->string('country_code', 2)->unique();
-            $table->string('endpoint');
-            $table->string('marketplace_id')->unique();
+            $table->string('default_country_code');
+            $table->string('default_currency_code');
+            $table->string('default_language_code');
+            $table->string('domain_name');
             $table->timestamps();
+
+            $table->unique(['marketplace_id']);
+
         });
     }
 

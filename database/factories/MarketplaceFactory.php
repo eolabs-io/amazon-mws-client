@@ -4,12 +4,17 @@ use EolabsIo\AmazonMwsClient\Models\Marketplace;
 use Faker\Generator as Faker;
 
 $factory->define(Marketplace::class, function (Faker $faker) {
-	$countryCodes = ['BR', 'CA', 'MX', 'US', 'AE', 'DE', 'EG', 'ES', 'FR', 'GB', 'IN', 'IT', 'NL', 'SA', 'TR', 'SG', 'AU', 'JP'];
+
+	$marketplaceIds = ['A2Q3Y263D00KWC','A2EUQ1WTGCTBG2', 'A1AM78C64UM0Y8', 'ATVPDKIKX0DER','A2VIGQ35RCS4UG', 'A1PA6795UKMFR9', 'ARBP9OOSHTCHU','A1RKKUPIHCS9HS', 'A13V1IB3VIYZZH', 'A1F83G8C2ARO7P', 'A21TJRUUN4KGV','APJ6JRA9NG5V4','A1805IZSGTT6HS', 'A17E79C6D8DWNP', 'A33AVAJ2PDY3EV', 'A19VAU5U5O7RUS', 'A39IBJ37TRP1C6', 'A1VC38T7YXB528'];
 
     return [
-			'name' => $faker->unique()->text(14), 
-			'country_code' => $faker->unique()->randomElement($countryCodes),
-			'endpoint' => $faker->url(), // 'https://mws.amazonservices.com/',
-			'marketplace_id' => $faker->text(14),
+            'marketplace_id' => $faker->unique()->randomElement($marketplaceIds), 
+            'name' => $faker->country,
+            'default_country_code' => $faker->countryCode,
+            'default_currency_code' => $faker->currencyCode,
+            'default_language_code' => $faker->languageCode,
+            'domain_name' => $faker->url(),
     ];
 });
+
+

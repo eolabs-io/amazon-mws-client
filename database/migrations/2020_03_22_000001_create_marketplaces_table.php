@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use EolabsIo\AmazonMwsClient\Shared\Migrations\AmazonMwsClientMigration;
 
-
-class CreateMarketplacesTable extends Migration
+class CreateMarketplacesTable extends AmazonMwsClientMigration
 {
     /**
      * Run the migrations.
@@ -25,7 +24,6 @@ class CreateMarketplacesTable extends Migration
             $table->timestamps();
 
             $table->unique(['marketplace_id']);
-
         });
     }
 

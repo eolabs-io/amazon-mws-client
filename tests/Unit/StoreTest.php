@@ -6,10 +6,8 @@ use EolabsIo\AmazonMwsClient\Models\Participation;
 use EolabsIo\AmazonMwsClient\Models\Store;
 use EolabsIo\AmazonMwsClient\Tests\BaseModelTest;
 
-
 class StoreTest extends BaseModelTest
 {
-
     protected function getModelClass()
     {
         return Store::class;
@@ -18,7 +16,7 @@ class StoreTest extends BaseModelTest
     /** @test */
     public function it_can_create_parameter_array()
     {
-        $store = factory(Store::class)->create();
+        $store = Store::factory()->create();
 
         $expectedParameters = [
             'AWSAccessKeyId' => $store->aws_access_key_id,
@@ -26,17 +24,16 @@ class StoreTest extends BaseModelTest
             'SellerId' => $store->seller_id
         ];
 
-        $this->assertArraysEqual($expectedParameters, $store->toParameters());   
+        $this->assertArraysEqual($expectedParameters, $store->toParameters());
     }
 
     /** @test */
     public function it_has_marketplace_relationship()
     {
-        $store = factory(Store::class)->create();
-        $participations = factory(Participation::class, 3)->create(['seller_id' => $store->seller_id]);
+        $store = Store::factory()->create();
+        $participations = Participation::factory()->times(3)->create(['seller_id' => $store->seller_id]);
         $marketplaces = $participations->load('marketplace')->pluck('marketplace');
 
-        $this->assertArraysEqual($marketplaces->toArray(), $store->marketplaces->toArray()); 
+        $this->assertArraysEqual($marketplaces->toArray(), $store->marketplaces->toArray());
     }
-
 }

@@ -1,15 +1,31 @@
 <?php
 
+namespace EolabsIo\AmazonMwsClient\Database\Factories;
+
 use EolabsIo\AmazonMwsClient\Models\Endpoint;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Endpoint::class, function (Faker $faker) {
-	$countryCodes = ['BR', 'CA', 'MX', 'US', 'AE', 'DE', 'EG', 'ES', 'FR', 'GB', 'IN', 'IT', 'NL', 'SA', 'TR', 'SG', 'AU', 'JP'];
+class EndpointFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Endpoint::class;
 
-    return [
-			'name' => $faker->text(14), 
-			'country_code' => $faker->unique()->randomElement($countryCodes),
-			'endpoint' => $faker->url(), // 'https://mws.amazonservices.com/',
-			'marketplace_id' => $faker->text(14),
-    ];
-});
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'name' => $this->faker->text(14),
+            'country_code' => $this->faker->unique()->countryCode(),
+            'endpoint' => $this->faker->url(), // 'https://mws.amazonservices.com/',
+            'marketplace_id' => $this->faker->text(14),
+        ];
+    }
+}

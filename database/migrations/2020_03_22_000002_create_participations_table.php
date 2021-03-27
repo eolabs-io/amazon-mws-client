@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use EolabsIo\AmazonMwsClient\Shared\Migrations\AmazonMwsClientMigration;
 
-class CreateParticipationsTable extends Migration
+class CreateParticipationsTable extends AmazonMwsClientMigration
 {
     /**
      * Run the migrations.

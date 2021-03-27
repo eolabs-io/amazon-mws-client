@@ -13,8 +13,8 @@ abstract class TestCase extends Orchestra
     {
         parent::setUp();
 
-        $this->loadMigrationsFrom(realpath(dirname(__DIR__).'/database/migrations')); 
-        $this->withFactories(realpath(dirname(__DIR__).'/database/factories'));
+        $this->loadMigrationsFrom(realpath(dirname(__DIR__).'/database/migrations'));
+        // $this->withFactories(realpath(dirname(__DIR__).'/database/factories'));
     }
 
     /**
@@ -58,5 +58,4 @@ abstract class TestCase extends Orchestra
     // {
 
     // }
-
 }

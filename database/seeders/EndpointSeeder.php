@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace EolabsIo\AmazonMwsClient\Database\Seeders;
 
 use EolabsIo\AmazonMwsClient\Models\Endpoint;
 use Illuminate\Database\Seeder;

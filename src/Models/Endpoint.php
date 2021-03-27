@@ -2,9 +2,10 @@
 
 namespace EolabsIo\AmazonMwsClient\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use EolabsIo\AmazonMwsClient\Models\AmazonMwsClientModel;
+use EolabsIo\AmazonMwsClient\Database\Factories\EndpointFactory;
 
-class Endpoint extends Model
+class Endpoint extends AmazonMwsClientModel
 {
     /**
      * The attributes that are mass assignable.
@@ -12,10 +13,19 @@ class Endpoint extends Model
      * @var array
      */
     protected $fillable = [
-                    'marketplace_id', 
+                    'marketplace_id',
                     'name',
                     'country_code',
                     'endpoint',
-				]; 
+                ];
 
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public static function newFactory()
+    {
+        return EndpointFactory::new();
+    }
 }

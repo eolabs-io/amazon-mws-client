@@ -2,10 +2,9 @@
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
+use EolabsIo\AmazonMwsClient\Shared\Migrations\AmazonMwsClientMigration;
 
-
-class CreateEndpointsTable extends Migration
+class CreateEndpointsTable extends AmazonMwsClientMigration
 {
     /**
      * Run the migrations.

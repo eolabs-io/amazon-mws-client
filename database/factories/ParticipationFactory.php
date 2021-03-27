@@ -1,20 +1,32 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace EolabsIo\AmazonMwsClient\Database\Factories;
 
+use EolabsIo\AmazonMwsClient\Models\Store;
 use EolabsIo\AmazonMwsClient\Models\Marketplace;
 use EolabsIo\AmazonMwsClient\Models\Participation;
-use EolabsIo\AmazonMwsClient\Models\Store;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Participation::class, function (Faker $faker) {
-    return [
-            'marketplace_id' => function() {
-            	return factory(Marketplace::class)->create()->marketplace_id;
-            }, 
-            'seller_id' => function() {
-            	return factory(Store::class)->create()->seller_id;
-            }, 
-            'has_seller_suspended_listings' => $faker->randomElement(['No', 'Restricted']), 
-    ];
-});
+class ParticipationFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Participation::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'marketplace_id' => Marketplace::factory()->create()->marketplace_id,
+            'seller_id' => Store::factory()->create()->seller_id,
+            'has_seller_suspended_listings' => $this->faker->randomElement(['No', 'Restricted']),
+        ];
+    }
+}

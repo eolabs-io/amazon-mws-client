@@ -18,19 +18,17 @@
     "require": {
         "php": "^7.3",
         "guzzlehttp/guzzle": "^7.0.1",
-        "illuminate/support": "^8.0",
-        "laravel/legacy-factories": "^1.0"
+        "illuminate/support": "^8.0"
     },
     "require-dev": {
         "orchestra/testbench": "^6.0",
-        "phpunit/phpunit": "^8.4|^9.0"
+        "phpunit/phpunit": "^9.0"
     },
     "autoload": {
-        "classmap": [
-            "database/seeds"
-        ],
         "psr-4": {
-            "EolabsIo\\AmazonMwsClient\\": "src"
+            "EolabsIo\\AmazonMwsClient\\": "src",
+            "EolabsIo\\AmazonMwsClient\\Database\\Factories\\": "database/factories/",
+            "EolabsIo\\AmazonMwsClient\\Database\\Seeders\\": "database/seeders/"
         }
     },
     "autoload-dev": {
@@ -52,7 +50,7 @@
                 "EolabsIo\\AmazonMwsClient\\AmazonMwsClientServiceProvider"
             ],
             "aliases": {
-                "AmazonMwsClient": "EolabsIo\\AmazonMwsClient\\AmazonMwsClientFacade"
+
             }
         }
     }

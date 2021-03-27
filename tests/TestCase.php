@@ -3,8 +3,6 @@
 namespace EolabsIo\AmazonMwsClient\Tests;
 
 use EolabsIo\AmazonMwsClient\AmazonMwsClientServiceProvider;
-use Illuminate\Support\Facades\Schema;
-use Orchestra\Testbench\Database\MigrateProcessor;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
@@ -14,7 +12,6 @@ abstract class TestCase extends Orchestra
         parent::setUp();
 
         $this->loadMigrationsFrom(realpath(dirname(__DIR__).'/database/migrations'));
-        // $this->withFactories(realpath(dirname(__DIR__).'/database/factories'));
     }
 
     /**

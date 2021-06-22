@@ -20,10 +20,8 @@
         </whitelist>
     </filter>
     <php>
-        <!-- <env name="DB_CONNECTION" value="sqlsrv"/> -->
-        <!-- <env name="DB_HOST" value="compass2012"/> -->
-        <!-- <env name="DB_PORT" value="1433"/> -->
-        <env name="DB_DATABASE" value="AmazonMwsClientTest"/>
+        <env name="DB_CONNECTION" value="sqlite"/>
+        <env name="DB_DATABASE" value=":memory:"/>
         <env name="DB_USERNAME" value="root"/>
         <env name="DB_PASSWORD" value=""/>
     </php>

@@ -3,8 +3,6 @@
 namespace EolabsIo\AmazonMwsClient\Support;
 
 use GuzzleHttp\Psr7\Query;
-use Illuminate\Support\Str;
-use function GuzzleHttp\Psr7\build_query;
 use EolabsIo\AmazonMwsClient\Support\UrlSignerException;
 
 class UrlSigner
@@ -73,7 +71,6 @@ class UrlSigner
         uksort($parameters, 'strcmp');
 
         return Query::build($parameters);
-        // return build_query($parameters);
     }
 
     private function setParameters(array $parameters): self

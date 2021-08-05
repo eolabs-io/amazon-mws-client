@@ -2,17 +2,17 @@
 
 namespace EolabsIo\AmazonMwsClient\Support;
 
-use EolabsIo\AmazonMwsClient\Support\UrlSignerException;
+use GuzzleHttp\Psr7\Query;
 use Illuminate\Support\Str;
 use function GuzzleHttp\Psr7\build_query;
-
+use EolabsIo\AmazonMwsClient\Support\UrlSignerException;
 
 class UrlSigner
 {
 
     /** @var array */
     private $parameters;
-        
+
     /** @var string */
     private $url;
 
@@ -20,71 +20,72 @@ class UrlSigner
     private $method = 'POST';
 
 
-	public function with(array $options = [])
-	{
-		$this->method = data_get($options, 'method', $this->method);
-		$this->url = data_get($options, 'url', $this->url);
-
-		return $this;
-	}
-
-  	public function signParameters(string $secret, array $parameters = []): array
+    public function with(array $options = [])
     {
-    	$signature = $this->setParameters($parameters)
-    					  ->signRequest($secret);
+        $this->method = data_get($options, 'method', $this->method);
+        $this->url = data_get($options, 'url', $this->url);
 
-    	return array_merge($parameters, ['Signature' => $signature]);
-	}
+        return $this;
+    }
 
-	private function signRequest(string $secret): string
-	{
-    	$key = $secret;
-    	$algorithm = $this->getAlgorithm();
-    	$stringToSign = $this->getStringToSign();
+    public function signParameters(string $secret, array $parameters = []): array
+    {
+        $signature = $this->setParameters($parameters)
+                          ->signRequest($secret);
 
-    	return $this->sign($stringToSign, $key, $algorithm);
+        return array_merge($parameters, ['Signature' => $signature]);
+    }
+
+    private function signRequest(string $secret): string
+    {
+        $key = $secret;
+        $algorithm = $this->getAlgorithm();
+        $stringToSign = $this->getStringToSign();
+
+        return $this->sign($stringToSign, $key, $algorithm);
     }
 
     private function getAlgorithm(): string
     {
-		$signatureMethod = data_get($this->getParameters(), 'SignatureMethod', null);
-		throw_if(
-			! filled($signatureMethod), 
-			UrlSignerException::class,
-			'Parameters must have a SignatureMethod key and value'
-		);
+        $signatureMethod = data_get($this->getParameters(), 'SignatureMethod', null);
+        throw_if(
+            ! filled($signatureMethod),
+            UrlSignerException::class,
+            'Parameters must have a SignatureMethod key and value'
+        );
 
-    	return $signatureMethod;
+        return $signatureMethod;
     }
 
     private function getStringToSign() : string
     {
-    	$method = $this->getMethod();
-    	$host = $this->getHost();
-    	$path = $this->getPath();
-    	$parameters = $this->getSortedParameterString();
+        $method = $this->getMethod();
+        $host = $this->getHost();
+        $path = $this->getPath();
+        $parameters = $this->getSortedParameterString();
 
-    	return "{$method}\n{$host}\n{$path}\n{$parameters}";
+        return "{$method}\n{$host}\n{$path}\n{$parameters}";
     }
 
-	private function getSortedParameterString() : string
-	{
-		$parameters = $this->getParameters();
-		uksort($parameters, 'strcmp');
-    	
-    	return build_query($parameters);
-	}
+    private function getSortedParameterString() : string
+    {
+        $parameters = $this->getParameters();
+        uksort($parameters, 'strcmp');
 
-	private function setParameters(array $parameters): self
-	{
-		$this->parameters = $parameters;
+        return Query::build($parameters);
+        // return build_query($parameters);
+    }
 
-		return $this;
-	}
+    private function setParameters(array $parameters): self
+    {
+        $this->parameters = $parameters;
+
+        return $this;
+    }
 
     private function getParameters() : array
     {
-    	return $this->parameters;
+        return $this->parameters;
     }
 
     /**
@@ -97,16 +98,17 @@ class UrlSigner
      */
     private function sign($data, $key, $algorithm) : string
     {
-    	$hash = 'sha256';
-        
-        if ($algorithm === 'HmacSHA1')
+        $hash = 'sha256';
+
+        if ($algorithm === 'HmacSHA1') {
             $hash = 'sha1';
+        }
 
         return base64_encode(
             hash_hmac($hash, $data, $key, true)
         );
     }
-    
+
     private function getMethod(): string
     {
         return $this->method;
